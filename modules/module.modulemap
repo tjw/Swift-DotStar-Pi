@@ -1,0 +1,4 @@
+module SPI [system] {
+	header "/usr/include/linux/spi/spidev.h"
+	export *
+}
