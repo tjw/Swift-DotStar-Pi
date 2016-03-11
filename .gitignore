@@ -2,3 +2,6 @@ module-cache
 *~
 SPI.swift
 spi
+*.o
+*.a
+bin

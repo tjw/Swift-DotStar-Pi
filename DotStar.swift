@@ -1,6 +1,7 @@
 // This will locate the module.modulemap in our `modules` directory and will build a Swift module based on <linux/spidev.h>
 
 import Glibc
+import SwiftSPI
 
 class DotStar {
     enum Error: ErrorType {
@@ -8,7 +9,7 @@ class DotStar {
     }
 
     let pixelCount:Int
-    let bitrate:Int
+    let bitrate:Int32
 
     var fd:CInt = -1
 
@@ -26,7 +27,7 @@ class DotStar {
 
     private var bytes:[UInt8]
 
-    init(pixelCount:Int, bitrate:Int = 8000000) {
+    init(pixelCount:Int, bitrate:Int32 = 8000000) {
         self.pixelCount = pixelCount
         self.bitrate = bitrate
 
@@ -46,9 +47,9 @@ class DotStar {
 	    throw Error.CannotOpen
 	}
 
-        var mode:UInt = SPI_MODE_0 | SPI_NO_CS
-	ioctl(fd, SPI_IOC_WR_MODE, &mode)
-        ioctl(fd, SPI_IOC_WR_MAX_SPEED_HZ, bitrate)
+        var mode:CInt = Swift_SPI_MODE_0 | Swift_SPI_NO_CS
+	Swift_ioctl_v1(fd, UInt(Swift_SPI_IOC_WR_MODE), &mode)
+        Swift_ioctl_i1(fd, UInt(Swift_SPI_IOC_WR_MAX_SPEED_HZ), bitrate)
     }
 }
 

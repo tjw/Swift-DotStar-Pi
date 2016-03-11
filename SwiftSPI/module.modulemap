@@ -1,0 +1,5 @@
+module SwiftSPI [system] {
+	header "spi.h"
+	export *
+	link "spi"
+}
