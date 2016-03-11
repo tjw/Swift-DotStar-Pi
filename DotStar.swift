@@ -1,12 +1,6 @@
 // This will locate the module.modulemap in our `modules` directory and will build a Swift module based on <linux/spidev.h>
 
 import Glibc
-import SPI
-
-// Basic defines come through the module, but anything at all interesting doesn't. Not sure if there is a workaround for this or not...
-let SPI_MODE_0:UInt = 0
-let SPI_IOC_WR_MODE:UInt = 0x40016b01
-let SPI_IOC_WR_MAX_SPEED_HZ:UInt = 0x40046b04
 
 class DotStar {
     enum Error: ErrorType {
@@ -52,7 +46,7 @@ class DotStar {
 	    throw Error.CannotOpen
 	}
 
-        let mode = SPI_MODE_0 | SPI_NO_CS
+        var mode:UInt = SPI_MODE_0 | SPI_NO_CS
 	ioctl(fd, SPI_IOC_WR_MODE, &mode)
         ioctl(fd, SPI_IOC_WR_MAX_SPEED_HZ, bitrate)
     }
