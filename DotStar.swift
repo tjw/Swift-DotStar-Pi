@@ -13,7 +13,7 @@ class DotStar {
 
     var fd:CInt = -1
 
-    // TODO: Make the order configurable? Default xBRG.
+    // TODO: Make the order configurable? This works with the strip I got.
     private let rOffset = 3
     private let gOffset = 2
     private let bOffset = 1
@@ -47,16 +47,16 @@ class DotStar {
             abort() // Throw an error
         }
         fd = open("/dev/spidev0.1", O_RDWR)
-	print("fd = \(fd)")
+        print("fd = \(fd)")
         guard fd >= 0 else {
             throw Error.CannotOpen
         }
 
         var mode:CUnsignedLong = Swift_SPI_MODE_0 | Swift_SPI_NO_CS
         var result = Swift_ioctl_v1(fd, Swift_SPI_IOC_WR_MODE, &mode)
-	print("mode result = \(result)")
+        print("mode result = \(result)")
         result = Swift_ioctl_i1(fd, Swift_SPI_IOC_WR_MAX_SPEED_HZ, Int32(bitrate))
-	print("bitrate result = \(bitrate)")
+        print("bitrate result = \(bitrate)")
     }
 
     func end() {
@@ -83,9 +83,6 @@ class DotStar {
     func write() throws {
         var xfer = Array<spi_ioc_transfer>()
 
-//	for byte in bytes {
-//	print("byte \(byte)")
-//	}
         var header = make_xfer()
         header.len = 4
         xfer.append(header)
