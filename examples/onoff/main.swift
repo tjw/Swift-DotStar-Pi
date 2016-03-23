@@ -12,13 +12,13 @@ try! dotstar.begin()
 while (true) {
     dotstar[0] = red
     try! dotstar.write()
-    usleep(200)
+    sleep(1)
 
     dotstar[0] = green
     try! dotstar.write()
-    usleep(200)
+    sleep(1)
 
     dotstar[0] = blue
     try! dotstar.write()
-    usleep(200)
+    sleep(1)
 }
